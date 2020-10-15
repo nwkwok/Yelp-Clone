@@ -4,9 +4,11 @@ const pool = require('./db')
 const express = require('express');
 const app = express();
 const port = process.env.PORT; 
-const morgan = require("morgan");
+const morgan = require('morgan');
+const cors = require('cors');
 
 //middlware
+app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'))
 
@@ -30,7 +32,7 @@ app.post('/restaurants', async(req, res) => {
 })
 
 //Get All Restaurants
-app.get('/', async(req, res) => {
+app.get('/restaurants', async(req, res) => {
     try {
     const getRestaurants = await pool.query(
         'SELECT * FROM restaurants')

@@ -5,7 +5,6 @@ import RestaurantDetailPage from './routes/RestaurantDetailPage'
 import UpdatePage from './routes/UpdatePage'
 import {RestaurantsContextProvider} from './context/RestaurantsContext'
 
-
 const App = () => {
     return (
     <RestaurantsContextProvider>
