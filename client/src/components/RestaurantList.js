@@ -5,16 +5,17 @@ import { RestaurantsContext } from '../context/RestaurantsContext';
 
 const RestaurantList = (props) => {
     const { restaurants, setRestaurants } = useContext(RestaurantsContext)
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get("/");    
                 setRestaurants(response.data.data.restaurants);
+                
             } catch (err) {
                 console.error(err.message)
             }
         };
-
         fetchData();
     }, [])
 
@@ -32,7 +33,22 @@ const RestaurantList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+
+                {restaurants && 
+                    restaurants.map(r => {
+                    return (
+                        <tr key={r.id}>
+                            <td>{r.name}</td>
+                            <td>{r.location}</td>
+                            <td>{"$".repeat(r.price_range)}</td>
+                            <td>{r.rating}</td>
+                            <td><button className="btn btn-warning">Update</button></td>
+                            <td><button className="btn btn-danger">Delete</button></td>
+                        </tr>
+                    )
+                })}
+
+                    {/* <tr>
                         <td>McDonalds</td>
                         <td>New York</td>
                         <td>$$$</td>
@@ -55,7 +71,7 @@ const RestaurantList = (props) => {
                         <td>Rating</td>
                         <td><button className="btn btn-warning">Update</button></td>
                         <td><button className="btn btn-danger">Delete</button></td>
-                    </tr>
+                    </tr> */}
                 </tbody>
             </table>
         </div>
