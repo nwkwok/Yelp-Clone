@@ -19,6 +19,15 @@ const RestaurantList = (props) => {
         fetchData();
     }, [])
 
+    const handleDelete = async(id) => {
+        try {
+            const response = await axios.delete(`/${id}`)
+            setRestaurants(restaurants.filter(r => id !== r.id))
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
     return (
         <div className="list-group">
             <table className="table table-hover table-dark">
@@ -43,7 +52,7 @@ const RestaurantList = (props) => {
                             <td>{"$".repeat(r.price_range)}</td>
                             <td>{r.rating}</td>
                             <td><button className="btn btn-warning">Update</button></td>
-                            <td><button className="btn btn-danger">Delete</button></td>
+                            <td><button onClick={() => handleDelete(r.id)} className="btn btn-danger">Delete</button></td>
                         </tr>
                     )
                 })}

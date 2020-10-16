@@ -2,8 +2,6 @@ import React, { useState, useContext } from 'react'
 import axios from '../apis/RestaurantFinder'
 import { RestaurantsContext } from '../context/RestaurantsContext';
 
-
-
 function AddRestaurant() {
     const { addRestaurants } = useContext(RestaurantsContext)
     const [name, setName] = useState("");
