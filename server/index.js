@@ -59,7 +59,7 @@ app.get('/restaurants/:id', async(req, res) => {
         res.status(200).json({
             status: 'success',
             data: {
-                restaurant: getRestaurantsById.rows
+                restaurant: getRestaurantsById.rows[0]
             },
         });
         
