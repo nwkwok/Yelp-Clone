@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from '../apis/RestaurantFinder'
 
 function UpdateRestaurant(props) {
@@ -7,7 +7,7 @@ function UpdateRestaurant(props) {
     const [name, setName] = useState("")
     const [location, setLocation] = useState("")
     const [priceRange, setPriceRange] = useState("")
-    
+    let history = useHistory();
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`/${id}`)
@@ -19,6 +19,16 @@ function UpdateRestaurant(props) {
 
         fetchData();
     }, [])
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        const updatedRestaurant = await axios.put(`/${id}`, 
+        {name: name,
+        location: location,
+        price_range: priceRange
+    });    
+    history.push('/')        
+    }
 
     return (
         <div>
@@ -52,7 +62,7 @@ function UpdateRestaurant(props) {
                         onChange={e => setPriceRange(e.target.value)}/>
                 </div>
             </form>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" onClick={handleSubmit} className="btn btn-primary">Submit</button>
         </div>
     ) 
 }
