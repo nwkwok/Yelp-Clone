@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import axios from '../apis/RestaurantFinder'
+import StarRating from '../components/StarRating'
 import { useParams } from 'react-router-dom'
 import { RestaurantsContext } from '../context/RestaurantsContext'
 
@@ -23,7 +24,7 @@ const RestaurantDetailPage = () => {
 
     return (
         <div>
-            {selectedRestaurant && selectedRestaurant.name}
+            {selectedRestaurant && <StarRating rating={4.9} />}
         </div>
     )
 }
