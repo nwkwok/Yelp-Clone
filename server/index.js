@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'))
 
-//Create Restaurant 
+//Create Restaurant or Review
 app.post('/restaurants', async(req, res) => {
     try {
         const { name, location, price_range } = req.body
@@ -30,6 +30,26 @@ app.post('/restaurants', async(req, res) => {
         console.error(err.message)
     }
 })
+
+app.post('/restaurants/:id/addReview', async (req, res) => {
+    const { id } = req.params
+    const { name, review, rating } = req.body
+    try {
+        const addReview = await pool.query(
+            'INSERT INTO reviews (restaurant_id, name, review, rating) VALUES ($1, $2, $3, $4) RETURNING *',
+            [id, name, review, rating])
+        
+            res.status(201).json({
+                status: 'success',
+                data: {
+                    review: addReview.rows[0]
+                }
+            });
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
 
 //Get All Restaurants
 app.get('/restaurants', async(req, res) => {

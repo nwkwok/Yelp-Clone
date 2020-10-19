@@ -1,9 +1,26 @@
 import React, { useState } from 'react'
+import axios from '../apis/RestaurantFinder'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 
 function AddReview() {
+    const { id } = useParams();
+    const location = useLocation();
+    const history = useHistory();
     const [name, setName] = useState("");
     const [reviewText, setReviewText] = useState("");
     const [rating, setRating] = useState("Rating");
+
+const handleSubmitReview = async (e) => {
+    e.preventDefault();
+
+    const newReview = await axios.post(`/${id}/addreview`, {
+        name,
+        review: reviewText,
+        rating
+    });
+    history.push('/');
+    history.push(location.pathname);
+}
 
     return (
         <div className="mb-2">
@@ -43,7 +60,7 @@ function AddReview() {
                         className="form-control" 
                         id="Review"></textarea>
                 </div>
-                <button className="btn btn-primary">
+                <button type="submit" onClick={handleSubmitReview} className="btn btn-primary">
                     Submit
                 </button>
             </form>
