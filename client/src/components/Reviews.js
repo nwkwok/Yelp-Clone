@@ -6,7 +6,7 @@ function Reviews(props) {
         <div className="row row-cols-3 mb-2">
             {props.reviews.map((review) => {
                 return  (
-                    <div className="card text-white bg-primary mb-3 mr-4" 
+                    <div key={review.id} className="card text-white bg-primary mb-3 mr-4" 
                     style={{maxWidth: "30%"}}>
                         <div className="card-header d-flex justify-content-between">
                             <span>{review.name}</span>
@@ -17,7 +17,7 @@ function Reviews(props) {
                         </div>
                     </div>
                 )
-            })};
+            })}
         </div>
     )
 }
