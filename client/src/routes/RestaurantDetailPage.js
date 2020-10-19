@@ -1,8 +1,9 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, Fragment } from 'react'
 import axios from '../apis/RestaurantFinder'
-import StarRating from '../components/StarRating'
+import Reviews from '../components/Reviews'
 import { useParams } from 'react-router-dom'
 import { RestaurantsContext } from '../context/RestaurantsContext'
+import AddReview from '../components/AddReview'
 
 
 const RestaurantDetailPage = () => {
@@ -13,18 +14,28 @@ const RestaurantDetailPage = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/${id}`)
-                setSelectedRestaurant(response.data.data.restaurant)
+                console.log(response)
+
+                setSelectedRestaurant(response.data.data)
+                console.log(response.data.data)
+
             } catch (err) {
-                console.errorr(err.message);
+                console.error(err.message);
             } 
         }
-
         fetchData();
     }, [])
 
     return (
         <div>
-            {selectedRestaurant && <StarRating rating={4.9} />}
+            {selectedRestaurant && (
+                <Fragment>
+                    <div className="mt-3">
+                        <Reviews reviews={selectedRestaurant.reviews} />
+                    </div>
+                    <AddReview />
+                </Fragment>
+            )}
         </div>
     )
 }

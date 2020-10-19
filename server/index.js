@@ -56,10 +56,15 @@ app.get('/restaurants/:id', async(req, res) => {
             'SELECT * FROM restaurants WHERE id = $1',
              [id])
 
+        const getReviewById = await pool.query(
+            'SELECT * FROM reviews WHERE restaurant_id = $1',
+             [id])
+
         res.status(200).json({
             status: 'success',
             data: {
-                restaurant: getRestaurantsById.rows[0]
+                restaurant: getRestaurantsById.rows[0],
+                reviews: getReviewById.rows
             },
         });
         
