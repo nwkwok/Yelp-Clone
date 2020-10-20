@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, Fragment } from 'react'
 import axios from '../apis/RestaurantFinder'
 import { RestaurantsContext } from '../context/RestaurantsContext';
 import { useHistory } from 'react-router-dom';
+import StarRating from '../components/StarRating'
 
 const RestaurantList = (props) => {
     const { restaurants, setRestaurants } = useContext(RestaurantsContext)
@@ -11,6 +12,7 @@ const RestaurantList = (props) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get("/");    
+                console.log(response.data.data);
                 setRestaurants(response.data.data.restaurants);
                 
             } catch (err) {
@@ -38,6 +40,20 @@ const RestaurantList = (props) => {
     const handleRestaurantSelect = (id) => {
         history.push(`/restaurants/${id}`);
     }
+
+    const renderRating = (restaurant) => {
+
+        if (!restaurant.count) {
+            return <span className="text-warning">0 reviews</span>
+        }
+        
+        return (
+        <Fragment>
+        <StarRating rating={restaurant.id} /> 
+        <span className="text-warning ml-1">{restaurant.count}</span>
+        </Fragment>
+        )
+    }
     
 
     return (
@@ -62,37 +78,13 @@ const RestaurantList = (props) => {
                             <td>{r.name}</td>
                             <td>{r.location}</td>
                             <td>{"$".repeat(r.price_range)}</td>
-                            <td>{r.rating}</td>
+                            <td>{renderRating(r)}</td>
                             <td><button onClick={(e) => handleUpdate(e, r.id)} className="btn btn-warning">Update</button></td>
                             <td><button onClick={(e) => handleDelete(e, r.id)} className="btn btn-danger">Delete</button></td>
                         </tr>
                     )
                 })}
 
-                    {/* <tr>
-                        <td>McDonalds</td>
-                        <td>New York</td>
-                        <td>$$$</td>
-                        <td>Rating</td>
-                        <td><button className="btn btn-warning">Update</button></td>
-                        <td><button className="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>McDonalds</td>
-                        <td>New York</td>
-                        <td>$$$</td>
-                        <td>Rating</td>
-                        <td><button className="btn btn-warning">Update</button></td>
-                        <td><button className="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>McDonalds</td>
-                        <td>New York</td>
-                        <td>$$$</td>
-                        <td>Rating</td>
-                        <td><button className="btn btn-warning">Update</button></td>
-                        <td><button className="btn btn-danger">Delete</button></td>
-                    </tr> */}
                 </tbody>
             </table>
         </div>
