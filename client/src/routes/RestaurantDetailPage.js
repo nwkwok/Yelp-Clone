@@ -44,6 +44,7 @@ const RestaurantDetailPage = () => {
                         <Reviews reviews={selectedRestaurant.reviews} />
                     </div>
                     <AddReview />
+                    
                 </Fragment>
             )}
         </div>

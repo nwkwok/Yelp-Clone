@@ -4,6 +4,7 @@ import Home from './routes/Home'
 import RestaurantDetailPage from './routes/RestaurantDetailPage'
 import UpdatePage from './routes/UpdatePage'
 import {RestaurantsContextProvider} from './context/RestaurantsContext'
+import Footer from './components/Footer'
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
             <Route exact path='/restaurants/:id' component={RestaurantDetailPage}/>
         </Switch>
     </Router>
+    <Footer />
     </div>
     </RestaurantsContextProvider>
     )
