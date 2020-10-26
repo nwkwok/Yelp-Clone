@@ -1,16 +1,23 @@
 require('dotenv').config();
 const { PRIORITY_LOW } = require('constants');
 const pool = require('./db')
+const path = require('path')
 const express = require('express');
 const app = express();
-const port = process.env.PORT; 
+const PORT = process.env.PORT || 3000; 
 const morgan = require('morgan');
 const cors = require('cors');
+
+
 
 //middlware
 app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'))
+
+if (process.env.NODE_ENV === "production") {
+    app.use(path.join(__dirname, "client/build"));
+}
 
 //Create Restaurant or Review
 app.post('/restaurants', async(req, res) => {
@@ -135,7 +142,10 @@ app.delete('/restaurants/:id', async(req, res) => {
     }
 })
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__firname, "client/build/index.html"));
+})
 
-app.listen(port || 3005, () => {
+app.listen(PORT || 3005, () => {
     console.log("You are listening on port 3000");
 });
