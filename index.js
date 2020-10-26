@@ -8,8 +8,6 @@ const PORT = process.env.PORT || 3000;
 const morgan = require('morgan');
 const cors = require('cors');
 
-
-
 //middlware
 app.use(cors());
 app.use(express.json());
@@ -143,7 +141,7 @@ app.delete('/restaurants/:id', async(req, res) => {
 })
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__firname, "client/build/index.html"));
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
 })
 
 app.listen(PORT || 3005, () => {
