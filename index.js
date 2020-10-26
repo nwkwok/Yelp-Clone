@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(morgan('tiny'))
 
 if (process.env.NODE_ENV === "production") {
-    app.use(path.join(__dirname, "client/build"));
+    app.use(express.static(path.join(__dirname, "client/build")));
 }
 
 //Create Restaurant or Review
@@ -144,6 +144,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "client/build/index.html"));
 })
 
-app.listen(PORT || 3005, () => {
+app.listen(PORT || 3000, () => {
     console.log("You are listening on port 3000");
 });
